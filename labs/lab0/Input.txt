@@ -1,3 +1,0 @@
-circle 1 1 1
-rectangle
-triangle
