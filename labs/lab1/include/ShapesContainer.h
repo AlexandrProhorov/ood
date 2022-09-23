@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+#include "shapes/Shape.h"
+
 class ShapesContainer
 {
 public:
@@ -17,11 +19,13 @@ public:
 	void ReadShapes(std::istream& input);
 
 private:
+	using ShapePtrType = std::shared_ptr<Shape>;
+
 	bool ReadCircle(std::istream& input);
-	bool ReadTriangle(std::istream& input);
+	//bool ReadTriangle(std::istream& input);
 	bool ReadRectangle(std::istream& input);
 
-	std::vector<ShapeType> m_shapes;
+	std::vector<ShapePtrType> m_shapes;
 };
 
 #endif

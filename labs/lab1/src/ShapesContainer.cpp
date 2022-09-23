@@ -5,6 +5,8 @@
 
 #include "../include/ShapesContainer.h"
 
+#include "../include/shapes/Shape.h"
+
 using ShapeType = ShapesContainer::ShapeType;
 const std::map<std::string, ShapeType> String_To_Shape = {
 	{ "triangle", ShapeType::Triangle },
@@ -28,14 +30,18 @@ void ShapesContainer::ReadShapes(std::istream& input)
 		{
 			if (shapeTypeStr == _shapeTypeStr)
 			{
-				if (shapeTypeStr == _shapeTypeStr)
-				{
-					shapeType = _shapeType;
-					break;
-				}
+				shapeType = _shapeType;
+				break;
 			}
 		}
-		ReadCircle(iss);
+		if (shapeType.has_value() && *shapeType == ShapeType::Circle)
+		{
+			ReadCircle(iss);
+		}
+		if (shapeType.has_value() && *shapeType == ShapeType::Rectangle)
+		{
+			ReadRectangle(iss);
+		}
 	}
 }
 
@@ -44,8 +50,24 @@ bool ShapesContainer::ReadCircle(std::istream& input)
 	double posX, posY, radius;
 	if (input >> posX >> posY >> radius)
 	{
-		std::make_shared<Circle>(posX, posY, radius);
-		std::cout << "Perimeter: " << 6.28 * radius << std::endl;
+		auto shape = std::make_shared<Circle>(Point(posX, posY), radius);
+		m_shapes.emplace_back(shape);
+		std::cout << "Area" << shape->GetArea() << '\n'
+				  << "Perimeter" << shape->GetPerimeter() << '\n';
+		return true;
+	}
+	return false;
+}
+
+bool ShapesContainer::ReadRectangle(std::istream& input)
+{
+	double posX, posY, posX1, posY1;
+	if (input >> posX >> posY >> posX1 >> posY1)
+	{
+		auto shape = std::make_shared<Rectangle>(Point(posX, posY), Point(posX1, posY1));
+		m_shapes.emplace_back(shape);
+		std::cout << "Height" << shape->GetHeight() << '\n'
+				  << "Width" << shape->GetWidth() << '\n';
 		return true;
 	}
 	return false;

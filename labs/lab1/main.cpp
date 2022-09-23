@@ -8,7 +8,7 @@ int main()
 	{
 		shapeContainer.ReadShapes(std::cin);
 	}
-	catch (const std::exception& e)
+	catch (const std::exception& _)
 	{
 		std::cout << "a";
 		return 1;
