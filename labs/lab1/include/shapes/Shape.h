@@ -12,14 +12,8 @@ struct Point
 	double X, Y;
 };
 
-class IShape
-{
-public:
-	virtual double GetPerimeter() const = 0;
-	virtual double GetArea() const = 0;
-};
 
-class Shape : public IShape
+class Shape 
 {
 public:
 	Shape(const Point& basePoint)
@@ -27,15 +21,11 @@ public:
 	{
 		
 	}
+	virtual double GetPerimeter() const = 0;
+	virtual double GetArea() const = 0;
+
 protected:
 	Point m_basePoint;
-};
-
-class IRectangle : public IShape
-{
-public:
-	virtual double GetHeight() const = 0;
-	virtual double GetWidth() const = 0;
 };
 
 class Circle : public Shape
@@ -60,20 +50,20 @@ protected:
 	double m_radius;
 }; 
 
-class Rectangle : public IRectangle
+class Rectangle : public Shape
 {
 public:
 	Rectangle(const Point firstPoint, const Point secondPoint)
-		: m_firstPoint(firstPoint)
+		: Shape(firstPoint)
 		, m_secondPoint(secondPoint)
 	{
 
 	}
-	double GetWidth() const final
+	virtual double GetWidth() const final
 	{
 		return m_secondPoint.X - m_firstPoint.X;
 	}
-	double GetHeight() const final
+	virtual double GetHeight() const final
 	{
 		return m_secondPoint.Y - m_firstPoint.Y;
 	}
