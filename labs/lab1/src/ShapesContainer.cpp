@@ -52,8 +52,9 @@ bool ShapesContainer::ReadCircle(std::istream& input)
 	{
 		auto shape = std::make_shared<Circle>(Point(posX, posY), radius);
 		m_shapes.emplace_back(shape);
-		std::cout << "Area" << shape->GetArea() << '\n'
-				  << "Perimeter" << shape->GetPerimeter() << '\n';
+		std::cout << "Circle: " << '\n'
+			      << "Area: " << shape->GetArea() << '\n'
+				  << "Perimeter: " << shape->GetPerimeter() << '\n';
 		return true;
 	}
 	return false;
@@ -66,8 +67,11 @@ bool ShapesContainer::ReadRectangle(std::istream& input)
 	{
 		auto shape = std::make_shared<Rectangle>(Point(posX, posY), Point(posX1, posY1));
 		m_shapes.emplace_back(shape);
-		std::cout << "Height" << shape->GetHeight() << '\n'
-				  << "Width" << shape->GetWidth() << '\n';
+		shape->GetHeight();
+		shape->GetWidth();
+		std::cout << "Rectangle: " << '\n'
+				  << "area: " << shape->GetArea() << '\n'
+				  << "perimeter: " << shape->GetPerimeter() << '\n';
 		return true;
 	}
 	return false;
