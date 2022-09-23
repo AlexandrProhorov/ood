@@ -19,7 +19,7 @@ public:
 	void ReadShapes(std::istream& input);
 
 private:
-	using ShapePtrType = std::shared_ptr<Shape>;
+	using ShapePtrType = std::shared_ptr<IShape>;
 
 	bool ReadCircle(std::istream& input);
 	//bool ReadTriangle(std::istream& input);
