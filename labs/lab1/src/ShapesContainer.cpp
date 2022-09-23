@@ -50,7 +50,7 @@ bool ShapesContainer::ReadCircle(std::istream& input)
 	double posX, posY, radius;
 	if (input >> posX >> posY >> radius)
 	{
-		auto shape = std::make_shared<Circle>(Point(posX, posY), radius);
+		auto shape = std::make_shared<Circle>(Point(posX, posY), 100, 100, radius);
 		m_shapes.emplace_back(shape);
 		std::cout << "Circle: " << '\n'
 			      << "Area: " << shape->GetArea() << '\n'
@@ -65,7 +65,7 @@ bool ShapesContainer::ReadRectangle(std::istream& input)
 	double posX, posY, posX1, posY1;
 	if (input >> posX >> posY >> posX1 >> posY1)
 	{
-		auto shape = std::make_shared<Rectangle>(Point(posX, posY), Point(posX1, posY1));
+		auto shape = std::make_shared<Rectangle>(Point(posX, posY), 100, 100, Point(posX1, posY1));
 		m_shapes.emplace_back(shape);
 		shape->GetHeight();
 		shape->GetWidth();

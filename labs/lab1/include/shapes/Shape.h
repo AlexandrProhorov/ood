@@ -6,87 +6,197 @@
 #include <math.h>
 #include <string>
 
+using Color = uint32_t;
 
 struct Point
 {
-	double X, Y;
+	double Distance(const Point& other) const
+	{
+		return std::sqrt((other.x - x) * (other.x - x) + (other.y - y) * (other.y - y));
+	}
+
+	bool operator==(const Point& other) const
+	{
+		return (x == other.x) && (y == other.y);
+	}
+
+	double x, y;
 };
 
-
-class Shape 
+class IShape
 {
 public:
-	Shape(const Point& basePoint)
-		: m_basePoint(basePoint)
-	{
-		
-	}
 	virtual double GetPerimeter() const = 0;
 	virtual double GetArea() const = 0;
+	virtual Color GetOutlineColor() const = 0;
+	virtual Point GetBasePoint() const = 0;
+
+	virtual ~IShape() = default;
+};
+
+template <typename Base = IShape>
+class ShapeImpl : public Base
+{
+public:
+	double GetPerimeter() const override
+	{
+		return 0;
+	}
+
+	double GetArea() const override
+	{
+		return 0;
+	}
+
+	Point GetBasePoint() const final
+	{
+		return m_basePoint;
+	}
+
+	Color GetOutlineColor() const final
+	{
+		return m_outlineColor;
+	}
 
 protected:
+	ShapeImpl(const Point& basePoint, const Color& outlineColor)
+		: m_basePoint(basePoint)
+		, m_outlineColor(outlineColor)
+	{
+	}
+
+	Color m_outlineColor;
 	Point m_basePoint;
 };
 
-class Circle : public Shape
+class ISolidShape : public IShape
 {
 public:
-	Circle(const Point& basePoint, const double radius)
-		: Shape(basePoint)
+	virtual Color GetFillColor() const = 0;
+};
+
+template <typename Base = ISolidShape>
+class SolidShapeImpl : public ShapeImpl<Base>
+{
+public:
+	using MyBase = ShapeImpl<Base>;
+
+	Color GetFillColor() const final
+	{
+		return m_fillColor;
+	}
+
+protected:
+	SolidShapeImpl(const Point& basePoint, const Color& outlineColor, const Color& fillColor)
+		: MyBase(basePoint, outlineColor)
+		, m_fillColor(fillColor)
+	{
+	}
+
+	Color m_fillColor;
+};
+
+class ICircle : public ISolidShape
+{
+public:
+	virtual Point GetCenter() const = 0;
+	virtual double GetRadius() const = 0;
+};
+
+class Circle : public SolidShapeImpl<ICircle>
+{
+public:
+	using MyBase = SolidShapeImpl<ICircle>;
+
+	Circle(const Point& basePoint, const Color& outlineColor, const Color& fillColor, const double radius)
+		: MyBase(basePoint, outlineColor, fillColor)
 		, m_radius(radius)
 	{
-
 	}
-	 double GetPerimeter() const final
+
+	double GetPerimeter() const final
 	{
 		return 2 * M_PI * m_radius;
 	}
+
 	double GetArea() const final
 	{
 		return M_PI * std::pow(m_radius, 2);
+	}
+
+	Point GetCenter() const final
+	{
+		return GetBasePoint();
+	}
+
+	double GetRadius() const final
+	{
+		return m_radius;
 	}
 
 protected:
 	double m_radius;
 }; 
 
-class Rectangle : public Shape
+class IRectangle : public ISolidShape
 {
 public:
-	Rectangle(const Point& firstPoint, const Point secondPoint)
-		: Shape(firstPoint)
+	virtual Point GetLeftTop() const = 0;
+	virtual Point GetRightBottom() const = 0;
+	virtual double GetWidth() const = 0;
+	virtual double GetHeight() const = 0;
+};
+
+class Rectangle : public SolidShapeImpl<IRectangle>
+{
+public:
+	using MyBase = SolidShapeImpl<IRectangle>;
+
+	Rectangle(const Point& firstPoint, const Color& outlineColor, const Color& fillColor, const Point& secondPoint)
+		: MyBase(firstPoint, outlineColor, fillColor)
 		, m_secondPoint(secondPoint)
-		, m_firstPoint(firstPoint)
 	{
 		
 	}
 	
 	virtual double GetWidth() const final
 	{
-		return m_secondPoint.X - m_firstPoint.X;
+		return m_secondPoint.x - GetBasePoint().x;
 	}
+
 	virtual double GetHeight() const final
 	{
-		return m_secondPoint.Y - m_firstPoint.Y;
+		return m_secondPoint.y - GetBasePoint().y;
 	}
+
 	double GetPerimeter() const final
 	{
 		return (GetWidth() + GetHeight()) * 2;
 	}
+
 	double GetArea() const final
 	{
 		return GetWidth() * GetHeight();
 	}
 
+	Point GetLeftTop() const final
+	{
+		return GetBasePoint();
+	}
+
+	Point GetRightBottom() const final
+	{
+		return m_secondPoint;
+	}
+
 protected:
 	Point m_secondPoint;
-	Point m_firstPoint;
 };
 
-class Triangle : public Rectangle
-{
-public:
-    const int X2, Y2;
-};
+//class Triangle : public Rectangle
+//{
+//public:
+//    const int X2, Y2;
+//};
 
 #endif
