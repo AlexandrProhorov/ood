@@ -53,12 +53,14 @@ protected:
 class Rectangle : public Shape
 {
 public:
-	Rectangle(const Point firstPoint, const Point secondPoint)
+	Rectangle(const Point& firstPoint, const Point secondPoint)
 		: Shape(firstPoint)
 		, m_secondPoint(secondPoint)
+		, m_firstPoint(firstPoint)
 	{
-
+		
 	}
+	
 	virtual double GetWidth() const final
 	{
 		return m_secondPoint.X - m_firstPoint.X;
@@ -77,8 +79,8 @@ public:
 	}
 
 protected:
-	Point m_firstPoint;
 	Point m_secondPoint;
+	Point m_firstPoint;
 };
 
 class Triangle : public Rectangle
