@@ -193,10 +193,80 @@ protected:
 	Point m_secondPoint;
 };
 
-//class Triangle : public Rectangle
-//{
-//public:
-//    const int X2, Y2;
-//};
+class ITriangle : public ISolidShape
+{
+public:
+	virtual Point GetVertex2() const = 0;
+	virtual Point GetVertex3() const = 0;
+	virtual double GetSide1() const = 0;
+	virtual double GetSide2() const = 0;
+	virtual double GetSide3() const = 0;
+	virtual double GetHalfPerimeter() const = 0;
+};
+
+class Triangle : public SolidShapeImpl<ITriangle>
+{
+public:
+	using MyBase = SolidShapeImpl<ITriangle>;
+
+	Triangle(const Point& firstPoint, const Color& outlineColor, const Color& fillColor, const Point& secondPoint, const Point& thirdPoint)
+		: MyBase(firstPoint, outlineColor, fillColor)
+		, m_secondPoint(secondPoint)
+		, m_thirdPoint(thirdPoint)
+	{
+
+	}
+
+	Point GetVertex2() const final
+	{
+		return m_secondPoint;
+	}
+
+	Point GetVertex3() const final
+	{
+		return m_thirdPoint;
+	}
+
+	double GetSide1() const final
+	{
+		double footingPointPow1 = std::pow(GetBasePoint().x - GetVertex2().x, 2);
+		double footingPointPow2 = std::pow(GetBasePoint().y - GetVertex2().y, 2);
+		return std::sqrt(footingPointPow1 + footingPointPow2);
+	}
+
+	double GetSide2() const final
+	{
+		double footingPointPow1 = std::pow(GetVertex2().x - GetVertex3().x, 2);
+		double footingPointPow2 = std::pow(GetVertex2().y - GetVertex3().y, 2);
+		return std::sqrt(footingPointPow1 + footingPointPow2);
+	}
+
+	double GetSide3() const final
+	{
+		double footingPointPow1 = std::pow(GetVertex3().x - GetBasePoint().x, 2);
+		double footingPointPow2 = std::pow(GetVertex3().y - GetBasePoint().y, 2);
+		return std::sqrt(footingPointPow1 + footingPointPow2);
+	}
+
+	double GetPerimeter() const final
+	{
+		return GetSide1() + GetSide2() + GetSide3();
+	}
+
+	double GetHalfPerimeter() const final
+	{
+		return GetPerimeter() * 0.5;
+	}
+
+	double GetArea() const final
+	{
+		return std::sqrt(GetHalfPerimeter() * (GetHalfPerimeter() - GetSide1()) * (GetHalfPerimeter() - GetSide2()) * (GetHalfPerimeter() - GetSide3()));
+	}
+
+protected:
+	Point m_secondPoint;
+	Point m_thirdPoint;
+};
+
 
 #endif

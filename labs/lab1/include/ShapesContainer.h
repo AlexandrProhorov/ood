@@ -22,7 +22,7 @@ private:
 	using ShapePtrType = std::shared_ptr<IShape>;
 
 	bool ReadCircle(std::istream& input);
-	//bool ReadTriangle(std::istream& input);
+	bool ReadTriangle(std::istream& input);
 	bool ReadRectangle(std::istream& input);
 
 	std::vector<ShapePtrType> m_shapes;

@@ -23,6 +23,7 @@
     <ClCompile Include="src\ShapesContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\include.h" />
     <ClInclude Include="include\pch.h" />
     <ClInclude Include="include\ShapesContainer.h" />
     <ClInclude Include="include\shapes\Shape.h" />
