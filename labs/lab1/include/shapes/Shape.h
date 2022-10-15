@@ -3,6 +3,7 @@
 
 #define _USE_MATH_DEFINES
 
+#include <SFML/Graphics.hpp>
 #include <math.h>
 #include <string>
 
@@ -10,7 +11,7 @@ using Color = uint32_t;
 
 struct Point
 {
-	double Distance(const Point& other) const
+	float Distance(const Point& other) const
 	{
 		return std::sqrt((other.x - x) * (other.x - x) + (other.y - y) * (other.y - y));
 	}
@@ -20,30 +21,35 @@ struct Point
 		return (x == other.x) && (y == other.y);
 	}
 
-	double x, y;
+	float x, y;
 };
 
-class IShape
+class IDrawable
 {
 public:
-	virtual double GetPerimeter() const = 0;
-	virtual double GetArea() const = 0;
+	virtual void Draw(sf::RenderWindow& window) const = 0;
+	virtual ~IDrawable() = default;
+};
+
+class IShape : public IDrawable
+{
+public:
+	virtual float GetPerimeter() const = 0;
+	virtual float GetArea() const = 0;
 	virtual Color GetOutlineColor() const = 0;
 	virtual Point GetBasePoint() const = 0;
-
-	virtual ~IShape() = default;
 };
 
 template <typename Base = IShape>
 class ShapeImpl : public Base
 {
 public:
-	double GetPerimeter() const override
+	float GetPerimeter() const override
 	{
 		return 0;
 	}
 
-	double GetArea() const override
+	float GetArea() const override
 	{
 		return 0;
 	}
@@ -100,7 +106,7 @@ class ICircle : public ISolidShape
 {
 public:
 	virtual Point GetCenter() const = 0;
-	virtual double GetRadius() const = 0;
+	virtual float GetRadius() const = 0;
 };
 
 class Circle : public SolidShapeImpl<ICircle>
@@ -108,43 +114,64 @@ class Circle : public SolidShapeImpl<ICircle>
 public:
 	using MyBase = SolidShapeImpl<ICircle>;
 
-	Circle(const Point& basePoint, const Color& outlineColor, const Color& fillColor, const double radius)
+	Circle(const Point& basePoint, const Color& outlineColor, const Color& fillColor, const float radius)
 		: MyBase(basePoint, outlineColor, fillColor)
 		, m_radius(radius)
 	{
 	}
 
-	double GetPerimeter() const final
+	float GetPerimeter() const final
 	{
 		return 2 * M_PI * m_radius;
 	}
 
-	double GetArea() const final
+	float GetArea() const final
 	{
-		return M_PI * std::pow(m_radius, 2);
+		return M_PI * m_radius * m_radius;
 	}
-
+	/*
+	* todo class painter с методом drawshapecontainer(const T&, sf::window&)
+	*/
 	Point GetCenter() const final
 	{
 		return GetBasePoint();
 	}
 
-	double GetRadius() const final
+	float GetRadius() const final
 	{
 		return m_radius;
 	}
 
+	void Draw(sf::RenderWindow& window) const final
+	{
+		sf::CircleShape drawCircle{ GetRadius() };
+		drawCircle.setFillColor(sf::Color{ GetFillColor() });
+		drawCircle.setPosition(sf::Vector2f{ GetCenter().x, GetCenter().y });
+		window.draw(drawCircle);
+	}
+
 protected:
-	double m_radius;
-}; 
+	float m_radius;
+};
+
+class player
+{
+public:
+	sf::CircleShape draw(int r)
+	{
+		sf::CircleShape circle;
+		circle.setRadius(r);
+		return circle;
+	}
+};
 
 class IRectangle : public ISolidShape
 {
 public:
 	virtual Point GetLeftTop() const = 0;
 	virtual Point GetRightBottom() const = 0;
-	virtual double GetWidth() const = 0;
-	virtual double GetHeight() const = 0;
+	virtual float GetWidth() const = 0;
+	virtual float GetHeight() const = 0;
 };
 
 class Rectangle : public SolidShapeImpl<IRectangle>
@@ -156,25 +183,24 @@ public:
 		: MyBase(firstPoint, outlineColor, fillColor)
 		, m_secondPoint(secondPoint)
 	{
-		
 	}
-	
-	virtual double GetWidth() const final
+
+	virtual float GetWidth() const final
 	{
 		return m_secondPoint.x - GetBasePoint().x;
 	}
 
-	virtual double GetHeight() const final
+	virtual float GetHeight() const final
 	{
 		return m_secondPoint.y - GetBasePoint().y;
 	}
 
-	double GetPerimeter() const final
+	float GetPerimeter() const final
 	{
 		return (GetWidth() + GetHeight()) * 2;
 	}
 
-	double GetArea() const final
+	float GetArea() const final
 	{
 		return GetWidth() * GetHeight();
 	}
@@ -198,10 +224,10 @@ class ITriangle : public ISolidShape
 public:
 	virtual Point GetVertex2() const = 0;
 	virtual Point GetVertex3() const = 0;
-	virtual double GetSide1() const = 0;
-	virtual double GetSide2() const = 0;
-	virtual double GetSide3() const = 0;
-	virtual double GetHalfPerimeter() const = 0;
+	virtual float GetSide1() const = 0;
+	virtual float GetSide2() const = 0;
+	virtual float GetSide3() const = 0;
+	virtual float GetHalfPerimeter() const = 0;
 };
 
 class Triangle : public SolidShapeImpl<ITriangle>
@@ -214,7 +240,6 @@ public:
 		, m_secondPoint(secondPoint)
 		, m_thirdPoint(thirdPoint)
 	{
-
 	}
 
 	Point GetVertex2() const final
@@ -227,38 +252,38 @@ public:
 		return m_thirdPoint;
 	}
 
-	double GetSide1() const final
+	float GetSide1() const final
 	{
-		double footingPointPow1 = std::pow(GetBasePoint().x - GetVertex2().x, 2);
-		double footingPointPow2 = std::pow(GetBasePoint().y - GetVertex2().y, 2);
-		return std::sqrt(footingPointPow1 + footingPointPow2);
+		float footingPointpowf1 = std::powf(GetBasePoint().x - GetVertex2().x, 2);
+		float footingPointpowf2 = std::powf(GetBasePoint().y - GetVertex2().y, 2);
+		return std::sqrt(footingPointpowf1 + footingPointpowf2);
 	}
 
-	double GetSide2() const final
+	float GetSide2() const final
 	{
-		double footingPointPow1 = std::pow(GetVertex2().x - GetVertex3().x, 2);
-		double footingPointPow2 = std::pow(GetVertex2().y - GetVertex3().y, 2);
-		return std::sqrt(footingPointPow1 + footingPointPow2);
+		float footingPointpowf1 = std::powf(GetVertex2().x - GetVertex3().x, 2);
+		float footingPointpowf2 = std::powf(GetVertex2().y - GetVertex3().y, 2);
+		return std::sqrt(footingPointpowf1 + footingPointpowf2);
 	}
 
-	double GetSide3() const final
+	float GetSide3() const final
 	{
-		double footingPointPow1 = std::pow(GetVertex3().x - GetBasePoint().x, 2);
-		double footingPointPow2 = std::pow(GetVertex3().y - GetBasePoint().y, 2);
-		return std::sqrt(footingPointPow1 + footingPointPow2);
+		float footingPointpowf1 = std::powf(GetVertex3().x - GetBasePoint().x, 2);
+		float footingPointpowf2 = std::powf(GetVertex3().y - GetBasePoint().y, 2);
+		return std::sqrt(footingPointpowf1 + footingPointpowf2);
 	}
 
-	double GetPerimeter() const final
+	float GetPerimeter() const final
 	{
 		return GetSide1() + GetSide2() + GetSide3();
 	}
 
-	double GetHalfPerimeter() const final
+	float GetHalfPerimeter() const final
 	{
 		return GetPerimeter() * 0.5;
 	}
 
-	double GetArea() const final
+	float GetArea() const final
 	{
 		return std::sqrt(GetHalfPerimeter() * (GetHalfPerimeter() - GetSide1()) * (GetHalfPerimeter() - GetSide2()) * (GetHalfPerimeter() - GetSide3()));
 	}
@@ -267,6 +292,5 @@ protected:
 	Point m_secondPoint;
 	Point m_thirdPoint;
 };
-
 
 #endif

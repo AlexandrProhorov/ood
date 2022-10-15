@@ -51,14 +51,11 @@ void ShapesContainer::ReadShapes(std::istream& input)
 
 bool ShapesContainer::ReadCircle(std::istream& input)
 {
-	double posX, posY, radius;
+	float posX, posY, radius;
 	if (input >> posX >> posY >> radius)
 	{
-		auto shape = std::make_shared<Circle>(Point(posX, posY), 100, 100, radius);
-		m_shapes.emplace_back(shape);
-		std::cout << comCircle << '\n'
-				  << comArea << shape->GetArea() << '\n'
-				  << comPerimeter << shape->GetPerimeter() << '\n';
+		/*ShapePtrType circle = std::make_shared<Circle>(Point(posX, posY), 100, 100, radius);*/
+		m_shapes.emplace_back(std::make_shared<Circle>(Point(posX, posY), 100, 100, radius));
 		return true;
 	}
 	return false;
@@ -66,17 +63,17 @@ bool ShapesContainer::ReadCircle(std::istream& input)
 
 bool ShapesContainer::ReadRectangle(std::istream& input)
 {
-	double posX, posY, posX1, posY1;
+	float posX, posY, posX1, posY1;
 	if (input >> posX >> posY >> posX1 >> posY1)
 	{
-		auto shape = std::make_shared<Rectangle>(Point(posX, posY), 100, 100, Point(posX1, posY1));
+		/*auto shape = std::make_shared<Rectangle>(Point(posX, posY), 100, 100, Point(posX1, posY1));
 		m_shapes.emplace_back(shape);
 		shape->GetHeight();
 		shape->GetWidth();
 		std::cout << '\n'
 				  << comRectangle << '\n'
 				  << comArea << shape->GetArea() << '\n'
-				  << comPerimeter << shape->GetPerimeter() << '\n';
+				  << comPerimeter << shape->GetPerimeter() << '\n';*/
 		return true;
 	}
 	return false;
@@ -84,10 +81,10 @@ bool ShapesContainer::ReadRectangle(std::istream& input)
 
 bool ShapesContainer::ReadTriangle(std::istream& input)
 {
-	double posX, posY, posX1, posY1, posX2, posY2;
+	float posX, posY, posX1, posY1, posX2, posY2;
 	if (input >> posX >> posY >> posX1 >> posY1 >> posX2 >> posY2)
 	{
-		auto shape = std::make_shared<Triangle>(Point(posX, posY), 100, 100, Point(posX1, posY1), Point(posX2, posY2));
+		/*auto shape = std::make_shared<Triangle>(Point(posX, posY), 100, 100, Point(posX1, posY1), Point(posX2, posY2));
 		m_shapes.emplace_back(shape);
 		shape->GetSide1();
 		shape->GetSide2();
@@ -96,7 +93,7 @@ bool ShapesContainer::ReadTriangle(std::istream& input)
 		std::cout << '\n'
 				  << comTriangle << '\n'
 				  << comArea << shape->GetArea() << '\n'
-				  << comPerimeter << shape->GetPerimeter() << '\n';
+				  << comPerimeter << shape->GetPerimeter() << '\n';*/
 		return true;
 	}
 	return false;
