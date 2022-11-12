@@ -10,45 +10,26 @@
 namespace draft
 {
 
+constexpr auto STOP_READ_SHAPES_WORD = "stop";
 
 class ShapesContainer
 {
 public:
+	using Container = std::vector<IDrawableSharedPtr>;
+	using ConstIterator = Container::const_iterator;
+
+	void PrintShapesInfo(std::ostream& os);
 	void ReadShapes(std::istream& input);
 
-	decltype(auto) begin() const
-	{
-		return m_shapes.begin();
-	}
-
-	decltype(auto) end() const
-	{
-		return m_shapes.end();
-	}
-
-	void PrintShapesInfo(std::ostream& os)
-	{
-		if (!std::ostream::sentry(os))
-		{
-			return;
-		}
-
-		for (auto& shape : m_shapes)
-		{
-			auto downcasted = std::dynamic_pointer_cast<IShape>(shape);
-			if (downcasted != nullptr)
-			{
-				os << downcasted->GetArea();
-			}
-		}
-	}
+	ConstIterator begin() const;
+	ConstIterator end() const;
 
 private:
 	bool ReadCircle(std::istream& input);
 	bool ReadTriangle(std::istream& input);
 	bool ReadRectangle(std::istream& input);
 
-	std::vector<IDrawableSharedPtr> m_shapes;
+	Container m_shapes;
 };
 
 } // namespace draft

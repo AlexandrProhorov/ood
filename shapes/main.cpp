@@ -1,14 +1,13 @@
 #include "pch.h"
 
-#include "ShapesContainer.h"
+#include "draft/ShapesContainer.h"
 #include "canvas/SFMLCanvas.h"
 #include "painter/Painter.h"
 
-// using namespace sf;
 
 int main()
 {
-	ShapesContainer shapeContainer;
+	draft::ShapesContainer shapeContainer;
 
 	painter::Painter painter{};
 

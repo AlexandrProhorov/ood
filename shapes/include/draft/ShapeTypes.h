@@ -26,7 +26,7 @@ constexpr std::string_view UNKNOWN = "unknown";
 } // namespace shape_type_str
 
 template <typename StringT>
-inline ShapeType StringToColor(StringT&& str)
+static inline ShapeType StringToColor(StringT&& str)
 {
 	using namespace shape_string_types;
 	using namespace string_util;

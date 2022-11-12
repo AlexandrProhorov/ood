@@ -31,12 +31,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Draft">
+      <UniqueIdentifier>{dc0d15ad-6fe8-4e91-aa2d-6cc5d50cec71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Draft">
+      <UniqueIdentifier>{3ae9853f-bfd7-477c-ba7f-8b504d7cc4ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Util">
+      <UniqueIdentifier>{66e2bef8-7ea3-4a93-bba5-cdf847b714d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Util">
+      <UniqueIdentifier>{ad6c172f-abc5-4b50-99f2-af8f6c660cd8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShapesContainer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\canvas\SFMLCanvas.cpp">
@@ -45,19 +54,22 @@
     <ClCompile Include="src\painter\Painter.cpp">
       <Filter>Source Files\Painter</Filter>
     </ClCompile>
+    <ClCompile Include="src\draft\ShapesContainer.cpp">
+      <Filter>Source Files\Draft</Filter>
+    </ClCompile>
+    <ClCompile Include="src\draft\ShapeTypes.cpp">
+      <Filter>Source Files\Draft</Filter>
+    </ClCompile>
+    <ClCompile Include="src\util\string_util.cpp">
+      <Filter>Source Files\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\ShapesContainer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\shapes\Shape.h">
       <Filter>Header Files\Shapes</Filter>
-    </ClInclude>
-    <ClInclude Include="include\include.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\canvas\ICanvas_fwd.h">
       <Filter>Header Files\Canvas</Filter>
@@ -76,6 +88,15 @@
     </ClInclude>
     <ClInclude Include="include\painter\Painter.h">
       <Filter>Header Files\Painter</Filter>
+    </ClInclude>
+    <ClInclude Include="include\draft\ShapesContainer.h">
+      <Filter>Header Files\Draft</Filter>
+    </ClInclude>
+    <ClInclude Include="include\draft\ShapeTypes.h">
+      <Filter>Header Files\Draft</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\string_util.h">
+      <Filter>Header Files\Util</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
