@@ -21,19 +21,20 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\canvas\SFMLCanvas.cpp" />
+    <ClCompile Include="src\draft\ShapesContainer.cpp" />
     <ClCompile Include="src\painter\Painter.cpp" />
-    <ClCompile Include="src\ShapesContainer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\canvas\ICanvas.h" />
     <ClInclude Include="include\canvas\ICanvas_fwd.h" />
     <ClInclude Include="include\canvas\SFMLCanvas.h" />
+    <ClInclude Include="include\draft\ShapesContainer.h" />
+    <ClInclude Include="include\draft\ShapeTypes.h" />
     <ClInclude Include="include\include.h" />
     <ClInclude Include="include\painter\IPainter.h" />
     <ClInclude Include="include\painter\IPainter_fwd.h" />
     <ClInclude Include="include\painter\Painter.h" />
     <ClInclude Include="include\pch.h" />
-    <ClInclude Include="include\ShapesContainer.h" />
     <ClInclude Include="include\shapes\Shape.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

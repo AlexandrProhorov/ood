@@ -31,12 +31,15 @@
     <Filter Include="Файлы заголовков\Painter">
       <UniqueIdentifier>{5b5c3048-c928-4061-9b39-4e473bcb67a1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Draft">
+      <UniqueIdentifier>{6a43024f-d419-4248-9411-5a98fd457ba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Draft">
+      <UniqueIdentifier>{a2dea804-e9c7-4559-ad19-427a71334e55}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ShapesContainer.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="src\canvas\SFMLCanvas.cpp">
@@ -45,12 +48,12 @@
     <ClCompile Include="src\painter\Painter.cpp">
       <Filter>Исходные файлы\Painter</Filter>
     </ClCompile>
+    <ClCompile Include="src\draft\ShapesContainer.cpp">
+      <Filter>Исходные файлы\Draft</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\pch.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="include\ShapesContainer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="include\shapes\Shape.h">
@@ -76,6 +79,12 @@
     </ClInclude>
     <ClInclude Include="include\painter\Painter.h">
       <Filter>Файлы заголовков\Painter</Filter>
+    </ClInclude>
+    <ClInclude Include="include\draft\ShapesContainer.h">
+      <Filter>Файлы заголовков\Draft</Filter>
+    </ClInclude>
+    <ClInclude Include="include\draft\ShapeTypes.h">
+      <Filter>Файлы заголовков\Draft</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
