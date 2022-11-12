@@ -2,10 +2,11 @@
 #define SHAPE_H
 
 #define _USE_MATH_DEFINES
+#include <math.h>
+#include <memory>
+#include <string>
 
 #include <SFML/Graphics.hpp>
-#include <math.h>
-#include <string>
 
 using Color = uint32_t;
 
@@ -30,6 +31,10 @@ public:
 	virtual void Draw(sf::RenderWindow& window) const = 0;
 	virtual ~IDrawable() = default;
 };
+
+using IDrawableRawPtr = IDrawable*;
+using IDrawablePtr = std::unique_ptr<IDrawable>;
+using IDrawableSharedPtr = std::shared_ptr<IDrawable>;
 
 class IShape : public IDrawable
 {
@@ -129,9 +134,7 @@ public:
 	{
 		return M_PI * m_radius * m_radius;
 	}
-	/*
-	* todo class painter с методом drawshapecontainer(const T&, sf::window&)
-	*/
+
 	Point GetCenter() const final
 	{
 		return GetBasePoint();
@@ -144,25 +147,15 @@ public:
 
 	void Draw(sf::RenderWindow& window) const final
 	{
-		sf::CircleShape drawCircle{ GetRadius() };
-		drawCircle.setFillColor(sf::Color{ GetFillColor() });
-		drawCircle.setPosition(sf::Vector2f{ GetCenter().x, GetCenter().y });
-		window.draw(drawCircle);
+		sf::CircleShape circle{};
+		circle.setRadius(GetRadius());
+		circle.setFillColor(sf::Color{ GetFillColor() });
+		circle.setPosition(sf::Vector2f{ GetCenter().x, GetCenter().y });
+		window.draw(circle);
 	}
 
 protected:
 	float m_radius;
-};
-
-class player
-{
-public:
-	sf::CircleShape draw(int r)
-	{
-		sf::CircleShape circle;
-		circle.setRadius(r);
-		return circle;
-	}
 };
 
 class IRectangle : public ISolidShape

@@ -1,40 +1,33 @@
-#include "include/pch.h"
-#include "include/ShapesContainer.h"
-#include "Painter.cpp"
-#include <SFML/Graphics.hpp>
+#include "pch.h"
 
-//using namespace sf;
+#include "ShapesContainer.h"
+#include "canvas/SFMLCanvas.h"
+#include "painter/Painter.h"
+
+// using namespace sf;
 
 int main()
 {
-	 //todo class painter с методом drawshapecontainer(const shapescontainer&, sf::window&)
-	 
 	ShapesContainer shapeContainer;
+
+	painter::Painter painter{};
+
+	sf::RenderWindow window(sf::VideoMode(900, 900), "SFML works!");
+	canvas::ICanvasSharedPtr canvas = std::make_shared<canvas::SFMLCanvas>(window);
+
 	try
 	{
-		sf::RenderWindow window(sf::VideoMode(900, 900), "SFML works!");
-		ShapesContainer container = ShapesContainer();
-		Painter paint = Painter();
-		while (window.isOpen())
-		{
-			sf::Event event;
-			while (window.pollEvent(event))
-			{
-				if (event.type == sf::Event::Closed)
-					window.close();
-			}
-			container.ReadShapes(std::cin);
-			window.clear();
-			paint.DrawShapeContainer(container, window);
-			window.display();
-		}
-		container.PrintShapesInfo(std::cout);
+		shapeContainer.ReadShapes(std::cin);
+
+		painter.DrawShapeContainer(shapeContainer, canvas);
 	}
-	catch (const std::exception& _)
+	catch (const std::exception& e)
 	{
-		std::cout << "a";
+		std::cout << e.what() << std::endl;
 		return 1;
 	}
+
+	shapeContainer.PrintShapesInfo(std::cout);
 
 	return 0;
 }

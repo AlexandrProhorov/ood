@@ -18,13 +18,22 @@ void ShapesContainer::ReadShapes(std::istream& input)
 {
 	std::string inputStr, shapeTypeStr;
 	std::stringstream iss;
+
 	std::optional<ShapeType> shapeType;
+
 	while (std::getline(input, inputStr))
 	{
+		if (inputStr == "stop")
+		{
+			break;
+		}
+
 		iss.str("");
 		iss.clear();
+
 		iss << inputStr;
 		iss >> shapeTypeStr;
+
 		shapeType.reset();
 		for (const auto& [_shapeTypeStr, _shapeType] : String_To_Shape)
 		{
