@@ -2,7 +2,7 @@
 
 #include "IPainter_fwd.h"
 
-#include "ShapesContainer.h"
+#include "draft/ShapesContainer.h"
 #include "canvas/ICanvas.h"
 
 namespace painter
@@ -11,7 +11,7 @@ namespace painter
 class IPainter
 {
 public:
-	virtual void DrawShapeContainer(const ShapesContainer& cont, canvas::ICanvasSharedPtr& canvas) const = 0;
+	virtual void DrawShapeContainer(const draft::ShapesContainer& cont, canvas::ICanvasSharedPtr& canvas) const = 0;
 
 	virtual ~IPainter() = default;
 };
