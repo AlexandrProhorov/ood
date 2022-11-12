@@ -10,12 +10,6 @@
 namespace draft
 {
 
-enum class ShapeType
-{
-	Circle,
-	Triangle,
-	Rectangle,
-};
 
 class ShapesContainer
 {

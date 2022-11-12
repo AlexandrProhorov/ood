@@ -3,18 +3,12 @@
 #include <memory>
 #include <optional>
 
-#include "../include/ShapesContainer.h"
+#include "../include/draft/ShapesContainer.h"
 #include "../include/include.h"
 #include "../include/shapes/Shape.h"
 
 namespace draft
 {
-
-const std::map<std::string, ShapeType> String_To_Shape = {
-	{ "triangle", ShapeType::Triangle },
-	{ "circle", ShapeType::Circle },
-	{ "rectangle", ShapeType::Rectangle },
-};
 
 void ShapesContainer::ReadShapes(std::istream& input)
 {
