@@ -7,7 +7,9 @@
 #include "../include/include.h"
 #include "../include/shapes/Shape.h"
 
-using ShapeType = ShapesContainer::ShapeType;
+namespace draft
+{
+
 const std::map<std::string, ShapeType> String_To_Shape = {
 	{ "triangle", ShapeType::Triangle },
 	{ "circle", ShapeType::Circle },
@@ -107,3 +109,5 @@ bool ShapesContainer::ReadTriangle(std::istream& input)
 	}
 	return false;
 }
+
+} // namespace draft

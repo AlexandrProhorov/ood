@@ -12,7 +12,7 @@ class SFMLCanvas final : public ICanvas
 public:
 	SFMLCanvas(sf::RenderWindow& sfmlRW);
 
-	void DrawShapes(const ShapesContainer& shapes) final;
+	void DrawShapes(const draft::ShapesContainer& shapes) final;
 
 private:
 	sf::RenderWindow& m_renderer;

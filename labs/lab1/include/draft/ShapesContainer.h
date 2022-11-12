@@ -7,16 +7,19 @@
 
 #include "shapes/Shape.h"
 
+namespace draft
+{
+
+enum class ShapeType
+{
+	Circle,
+	Triangle,
+	Rectangle,
+};
+
 class ShapesContainer
 {
 public:
-	enum class ShapeType
-	{
-		Circle,
-		Triangle,
-		Rectangle,
-	};
-
 	void ReadShapes(std::istream& input);
 
 	decltype(auto) begin() const
@@ -49,9 +52,11 @@ public:
 private:
 	bool ReadCircle(std::istream& input);
 	bool ReadTriangle(std::istream& input);
-	bool ReadRectangle(std::istream& input);	
+	bool ReadRectangle(std::istream& input);
 
 	std::vector<IDrawableSharedPtr> m_shapes;
 };
+
+} // namespace draft
 
 #endif

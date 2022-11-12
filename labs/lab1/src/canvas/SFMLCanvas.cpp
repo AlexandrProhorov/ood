@@ -8,7 +8,7 @@ SFMLCanvas::SFMLCanvas(sf::RenderWindow& sfmlRW)
 {
 }
 
-void SFMLCanvas::DrawShapes(const ShapesContainer& shapes)
+void SFMLCanvas::DrawShapes(const draft::ShapesContainer& shapes)
 {
 	while (m_renderer.isOpen())
 	{
@@ -21,7 +21,8 @@ void SFMLCanvas::DrawShapes(const ShapesContainer& shapes)
 			}
 		}
 
-		//m_renderer.clear(backgroundColor);
+		//TODO: 0xFFFFFF -> 0xFFFFFFFF так как иначе альфа канал неправильно работает
+		m_renderer.clear(sf::Color{255, 255, 0});
 
 		for (const auto& shape : shapes)
 		{

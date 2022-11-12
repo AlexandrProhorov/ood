@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ICanvas_fwd.h"
-#include "ShapesContainer.h"
+#include "draft/ShapesContainer.h"
 
 namespace canvas
 {
@@ -9,7 +9,7 @@ namespace canvas
 class ICanvas
 {
 public:
-	virtual void DrawShapes(const ShapesContainer& shapes) = 0;
+	virtual void DrawShapes(const draft::ShapesContainer& shapes) = 0;
 
 	virtual ~ICanvas() = default;
 };
